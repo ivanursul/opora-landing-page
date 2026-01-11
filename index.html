@@ -270,8 +270,8 @@
 
         .badge {
             display: inline-block;
-            background: #0066CC;
-            color: #fff;
+            background: transparent;
+            color: #0066CC;
             padding: 8px 20px;
             border-radius: 30px;
             font-size: 13px;
@@ -279,6 +279,7 @@
             margin-bottom: 32px;
             letter-spacing: 0.5px;
             text-transform: uppercase;
+            border: 2px solid #0066CC;
         }
 
         /* Hero Content Grid */
@@ -375,10 +376,12 @@
 
         /* Problem Section */
         .problem {
-            background: #1a1a1a;
-            color: #fff;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+            color: #1a1a1a;
             margin: 0;
             padding: 80px 24px;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
         }
 
         .problem-inner {
@@ -387,18 +390,18 @@
         }
 
         .problem h2 {
-            color: #fff;
+            color: #1a1a1a;
         }
 
         .problem p {
-            color: #aaa;
+            color: #555;
             font-size: 18px;
         }
 
         .problem em {
             color: #0066CC;
             font-style: normal;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Features */
