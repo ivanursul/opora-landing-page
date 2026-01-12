@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPORA DIY Kit - Fall Detection Device</title>
+    <meta name="description" content="Get the OPORA DIY Kit - a complete fall detection device kit with Raspberry Pi Zero 2W, custom PCB, sensors, and 3D-printed enclosure.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            background: #fff;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            text-decoration: none;
+            color: #1a1a1a;
+        }
+
+        .logo span {
+            color: #0066CC;
+        }
+
+        .back-link {
+            color: #0066CC;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Product Hero */
+        .product-hero {
+            padding: 60px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .product-gallery {
+            position: sticky;
+            top: 100px;
+        }
+
+        .product-main-image {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            margin-bottom: 16px;
+        }
+
+        .product-thumbnails {
+            display: flex;
+            gap: 12px;
+        }
+
+        .product-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #eee;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .product-thumbnail:hover,
+        .product-thumbnail.active {
+            border-color: #0066CC;
+        }
+
+        .product-info h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .product-tagline {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-amount {
+            font-size: 42px;
+            font-weight: 800;
+            color: #1a1a1a;
+        }
+
+        .price-label {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .product-badges {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .product-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f7ff;
+            color: #0066CC;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .product-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .order-button {
+            display: block;
+            width: 100%;
+            background: #0066CC;
+            color: #fff;
+            padding: 18px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 16px;
+        }
+
+        .order-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 102, 204, 0.3);
+        }
+
+        .order-note {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 0;
+            border-top: 1px solid #eee;
+        }
+
+        section h2 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 32px;
+            letter-spacing: -0.5px;
+        }
+
+        /* What's Included */
+        .included-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .included-item {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 12px;
+        }
+
+        .included-icon {
+            width: 48px;
+            height: 48px;
+            background: #0066CC;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .included-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: #fff;
+            fill: none;
+        }
+
+        .included-content h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .included-content p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Specifications */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .specs-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .specs-table th {
+            text-align: left;
+            padding: 16px 0;
+            font-weight: 600;
+            color: #1a1a1a;
+            width: 40%;
+        }
+
+        .specs-table td {
+            padding: 16px 0;
+            color: #555;
+        }
+
+        .specs-category {
+            background: #f5f5f5;
+            padding: 12px 16px;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #666;
+            margin-top: 24px;
+            border-radius: 8px;
+        }
+
+        .specs-category:first-child {
+            margin-top: 0;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: #fafafa;
+            border-radius: 12px;
+        }
+
+        .feature-card-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #0066CC 0%, #0052a3 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .feature-card-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: #fff;
+            fill: none;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        /* Requirements */
+        .requirements-list {
+            list-style: none;
+        }
+
+        .requirements-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .requirements-list li:last-child {
+            border-bottom: none;
+        }
+
+        .requirements-list svg {
+            width: 20px;
+            height: 20px;
+            stroke: #0066CC;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* FAQ */
+        .faq-item {
+            padding: 24px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .faq-answer {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+            margin: 0 -24px;
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            color: #666;
+            margin-bottom: 32px;
+            font-size: 18px;
+        }
+
+        .cta-section .order-button {
+            display: inline-block;
+            width: auto;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            border-top: 1px solid #eee;
+            text-align: center;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #0066CC;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .product-hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .product-gallery {
+                position: static;
+            }
+
+            .product-info h1 {
+                font-size: 28px;
+            }
+
+            .included-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">OP<span>O</span>RA</a>
+                <a href="/" class="back-link">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="product-hero" style="border: none; padding-top: 40px;">
+            <div class="product-gallery">
+                <img src="images/device-exploded.png" alt="OPORA DIY Kit components" class="product-main-image" id="mainImage">
+                <div class="product-thumbnails">
+                    <img src="images/device-exploded.png" alt="Exploded view" class="product-thumbnail active" onclick="changeImage(this, 'images/device-exploded.png')">
+                    <img src="images/device-assembly.png" alt="Assembly view" class="product-thumbnail" onclick="changeImage(this, 'images/device-assembly.png')">
+                    <img src="images/device-wearing.png" alt="Wearing view" class="product-thumbnail" onclick="changeImage(this, 'images/device-wearing.png')">
+                </div>
+            </div>
+
+            <div class="product-info">
+                <h1>OPORA DIY Kit</h1>
+                <p class="product-tagline">Complete fall detection device kit. Build it yourself, protect your loved ones.</p>
+
+                <div class="product-price">
+                    <span class="price-amount">$100</span>
+                    <span class="price-label">DIY Kit</span>
+                </div>
+
+                <div class="product-badges">
+                    <span class="product-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        Patented Design
+                    </span>
+                    <span class="product-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        99.8% Accuracy
+                    </span>
+                    <span class="product-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                        </svg>
+                        Open Source
+                    </span>
+                </div>
+
+                <a href="mailto:me@ivanursul.com?subject=OPORA%20DIY%20Kit%20Order&body=Hi%2C%0A%0AI%20would%20like%20to%20order%20an%20OPORA%20DIY%20Kit.%0A%0APlease%20send%20me%20the%20details%20for%20payment%20and%20shipping.%0A%0AThank%20you!" class="order-button">Order Now - $100</a>
+                <p class="order-note">Free shipping within Ukraine. International shipping available.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>What's Included</h2>
+            <div class="included-grid">
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"/>
+                            <rect x="9" y="9" width="6" height="6"/>
+                            <line x1="9" y1="1" x2="9" y2="4"/>
+                            <line x1="15" y1="1" x2="15" y2="4"/>
+                            <line x1="9" y1="20" x2="9" y2="23"/>
+                            <line x1="15" y1="20" x2="15" y2="23"/>
+                            <line x1="20" y1="9" x2="23" y2="9"/>
+                            <line x1="20" y1="14" x2="23" y2="14"/>
+                            <line x1="1" y1="9" x2="4" y2="9"/>
+                            <line x1="1" y1="14" x2="4" y2="14"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>Raspberry Pi Zero 2W</h3>
+                        <p>Quad-core processor with WiFi and Bluetooth connectivity</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>Custom PCB Module</h3>
+                        <p>Pre-assembled board with all sensors integrated</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="6" width="18" height="12" rx="2" ry="2"/>
+                            <line x1="23" y1="13" x2="23" y2="11"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>2000mAh Battery</h3>
+                        <p>Li-Po battery with integrated charging module</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>3D Printed Enclosure</h3>
+                        <p>PETG plastic case with IP44 protection rating</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>Chest Harness</h3>
+                        <p>Adjustable elastic strap for comfortable wearing</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>Pre-flashed SD Card</h3>
+                        <p>Ready-to-use with fall detection software installed</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>Assembly Hardware</h3>
+                        <p>M2.5 bolts, nuts, and mounting accessories</p>
+                    </div>
+                </div>
+                <div class="included-item">
+                    <div class="included-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                    </div>
+                    <div class="included-content">
+                        <h3>Assembly Guide</h3>
+                        <p>Step-by-step instructions with photos</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Technical Specifications</h2>
+
+            <div class="specs-category">Processing</div>
+            <table class="specs-table">
+                <tr>
+                    <th>Processor</th>
+                    <td>Raspberry Pi Zero 2W (Quad-core ARM Cortex-A53 @ 1GHz)</td>
+                </tr>
+                <tr>
+                    <th>Memory</th>
+                    <td>512MB LPDDR2 SDRAM</td>
+                </tr>
+                <tr>
+                    <th>Storage</th>
+                    <td>16GB microSD card (included, pre-flashed)</td>
+                </tr>
+                <tr>
+                    <th>AI Model</th>
+                    <td>Transformer-based deep learning with Kalman filtering</td>
+                </tr>
+            </table>
+
+            <div class="specs-category">Sensors</div>
+            <table class="specs-table">
+                <tr>
+                    <th>Motion Sensor</th>
+                    <td>ICM-40609-D (6-axis accelerometer + gyroscope)</td>
+                </tr>
+                <tr>
+                    <th>Barometric Sensor</th>
+                    <td>BMP388 (high-precision pressure sensor)</td>
+                </tr>
+                <tr>
+                    <th>ECG Amplifier</th>
+                    <td>AD8232 (single-lead heart rate monitor)</td>
+                </tr>
+                <tr>
+                    <th>Detection Accuracy</th>
+                    <td>99.8% in controlled tests</td>
+                </tr>
+                <tr>
+                    <th>Detection Time</th>
+                    <td>&lt;8 seconds</td>
+                </tr>
+            </table>
+
+            <div class="specs-category">Power</div>
+            <table class="specs-table">
+                <tr>
+                    <th>Battery</th>
+                    <td>2000mAh Li-Po (3.7V)</td>
+                </tr>
+                <tr>
+                    <th>Battery Life</th>
+                    <td>4+ hours continuous operation</td>
+                </tr>
+                <tr>
+                    <th>Charging</th>
+                    <td>USB Type-C (5V/1A)</td>
+                </tr>
+                <tr>
+                    <th>Charging Time</th>
+                    <td>~2 hours</td>
+                </tr>
+            </table>
+
+            <div class="specs-category">Physical</div>
+            <table class="specs-table">
+                <tr>
+                    <th>Dimensions</th>
+                    <td>85 x 65 x 30 mm</td>
+                </tr>
+                <tr>
+                    <th>Weight</th>
+                    <td>~120g (with battery)</td>
+                </tr>
+                <tr>
+                    <th>Material</th>
+                    <td>PETG plastic</td>
+                </tr>
+                <tr>
+                    <th>Protection</th>
+                    <td>IP44 (splash resistant)</td>
+                </tr>
+                <tr>
+                    <th>Operating Temp</th>
+                    <td>+5°C to +40°C</td>
+                </tr>
+            </table>
+
+            <div class="specs-category">Connectivity</div>
+            <table class="specs-table">
+                <tr>
+                    <th>WiFi</th>
+                    <td>802.11 b/g/n (2.4GHz)</td>
+                </tr>
+                <tr>
+                    <th>Bluetooth</th>
+                    <td>Bluetooth 4.2, BLE</td>
+                </tr>
+                <tr>
+                    <th>Notifications</th>
+                    <td>Mobile app push notifications (app coming soon)</td>
+                </tr>
+            </table>
+        </section>
+
+        <section>
+            <h2>Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v8M8 12h8"/>
+                        </svg>
+                    </div>
+                    <h3>Chest-Mounted</h3>
+                    <p>Optimal sensor placement near the body's center of mass for accurate detection</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>AI-Powered</h3>
+                    <p>Transformer neural network trained on thousands of fall patterns</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                        </svg>
+                    </div>
+                    <h3>Instant Alerts</h3>
+                    <p>Audible alarm and push notifications to family members</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <h3>Multi-Sensor</h3>
+                    <p>Accelerometer, gyroscope, barometer, and ECG working together</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3>Low False Alarms</h3>
+                    <p>Kalman filtering reduces noise for fewer false positives</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>Open Source</h3>
+                    <p>Fully hackable and customizable for your needs</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>What You'll Need</h2>
+            <ul class="requirements-list">
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span><strong>Basic soldering skills</strong> - The kit requires minimal soldering (battery wires and optional ECG electrodes)</span>
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span><strong>Small screwdriver</strong> - Phillips head for M2.5 screws</span>
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span><strong>WiFi network</strong> - 2.4GHz network for device connectivity and notifications</span>
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span><strong>Smartphone</strong> - iOS or Android for receiving fall notifications (app coming soon)</span>
+                </li>
+                <li>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                    <span><strong>USB-C cable</strong> - For charging the device</span>
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">How difficult is the assembly?</div>
+                <div class="faq-answer">The kit is designed for beginners. Most components snap or screw together. Basic soldering is only required for connecting the battery wires. The included guide walks you through each step with detailed photos.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">How long does assembly take?</div>
+                <div class="faq-answer">Most people complete assembly in 30-60 minutes. The software comes pre-installed on the SD card, so there's no programming required.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Is the mobile app available?</div>
+                <div class="faq-answer">The mobile app is currently in development. The device works standalone with audible alerts. Push notifications to family members will be available when the app launches.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Can I customize the software?</div>
+                <div class="faq-answer">Yes! The device runs Linux and all source code is available. You can modify detection thresholds, add features, or integrate with your own systems.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">What's the warranty?</div>
+                <div class="faq-answer">We offer a 30-day satisfaction guarantee. If any component is defective, we'll replace it free of charge.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">Do you ship internationally?</div>
+                <div class="faq-answer">Yes, we ship worldwide. Shipping is free within Ukraine. International shipping costs vary by location - contact us for a quote.</div>
+            </div>
+        </section>
+    </div>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Build?</h2>
+            <p>Get your OPORA DIY Kit today and help protect your loved ones.</p>
+            <a href="mailto:me@ivanursul.com?subject=OPORA%20DIY%20Kit%20Order&body=Hi%2C%0A%0AI%20would%20like%20to%20order%20an%20OPORA%20DIY%20Kit.%0A%0APlease%20send%20me%20the%20details%20for%20payment%20and%20shipping.%0A%0AThank%20you!" class="order-button">Order Now - $100</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <footer>
+            <p>OPORA Fall Detection Device</p>
+            <p>Created by <a href="https://ivanursul.com" target="_blank">Ivan Ursul</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function changeImage(thumbnail, src) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.product-thumbnail').forEach(t => t.classList.remove('active'));
+            thumbnail.classList.add('active');
+        }
+    </script>
+</body>
+</html>
